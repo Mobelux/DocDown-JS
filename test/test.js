@@ -106,7 +106,7 @@ describe('HMI Blocks', function() {
     });
 
     it('must note with markdown content list', function() {
-        var dd = '!!! MUST\n###list intro message\n\n1. _list item 1_\n    * sub list item 1\n    * sub list item 2\n2. list item 2\n3. list item 3\n\ntest next block of content\n!!!',
+        var dd = '!!! MUST\n### list intro message\n\n1. _list item 1_\n    * sub list item 1\n    * sub list item 2\n2. list item 2\n3. list item 3\n\ntest next block of content\n!!!',
             html = md.render(dd);
 
         html.should.equal('');
