@@ -105,12 +105,12 @@ describe('HMI Blocks', function() {
         html.should.equal('<div class="sdl"><div class="icon">{% svg "standard/icon-sdl" %}<img class="icon--pdf" src="{% static "svg/standard/icon-sdl.svg" %}"></div><h5>SDL</h5>hello world!</div>');
     });
 
-    // it('must note with markdown content list', function() {
-    //     var dd = '!!! MUST\n###list intro message\n\n1. _list item 1_\n    * sub list item 1\n    * sub list item 2\n2. list item 2\n3. list item 3\n\ntest next block of content\n!!!',
-    //         html = md.render(dd);
-    //
-    //     html.should.equal('');
-    // });
+    it('must note with markdown content list', function() {
+        var dd = '!!! MUST\n###list intro message\n\n1. _list item 1_\n    * sub list item 1\n    * sub list item 2\n2. list item 2\n3. list item 3\n\ntest next block of content\n!!!',
+            html = md.render(dd);
+
+        html.should.equal('');
+    });
 
     it('random note', function() {
         var dd = '!!! JSON\nhello world!\n!!!',
