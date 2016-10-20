@@ -81,42 +81,42 @@ describe('HMI Blocks', function() {
         var dd = '!!! MUST\nhello world!\n!!!',
             html = md.render(dd);
 
-        html.should.equal('<div class="must"><div class="icon">{% svg "standard/icon-must" %}<img class="icon--pdf" src="{% static "svg/standard/icon-must.svg" %}"></div><h5>Must</h5>hello world!</div>');
+        html.should.equal('<div class="must"><div class="icon">{% svg "standard/icon-must" %}<img class="icon--pdf" src="{% static "svg/standard/icon-must.svg" %}"></div><h5>Must</h5><p>hello world!</p>\n</div>');
     });
 
     it('generic note', function() {
         var dd = '!!! NOTE\nhello world!\n!!!',
             html = md.render(dd);
 
-        html.should.equal('<div class="note"><div class="icon">{% svg "standard/icon-note" %}<img class="icon--pdf" src="{% static "svg/standard/icon-note.svg" %}"></div><h5>Note</h5>hello world!</div>');
+        html.should.equal('<div class="note"><div class="icon">{% svg "standard/icon-note" %}<img class="icon--pdf" src="{% static "svg/standard/icon-note.svg" %}"></div><h5>Note</h5><p>hello world!</p>\n</div>');
     });
 
     it('may note', function() {
         var dd = '!!! MAY\nhello world!\n!!!',
             html = md.render(dd);
 
-        html.should.equal('<div class="may"><div class="icon">{% svg "standard/icon-may" %}<img class="icon--pdf" src="{% static "svg/standard/icon-may.svg" %}"></div><h5>May</h5>hello world!</div>');
+        html.should.equal('<div class="may"><div class="icon">{% svg "standard/icon-may" %}<img class="icon--pdf" src="{% static "svg/standard/icon-may.svg" %}"></div><h5>May</h5><p>hello world!</p>\n</div>');
     });
 
     it('SDL note', function() {
-        var dd = '!!! SDL\nhello world!\n!!!',
+        var dd = '!!! SDL\nhello world!\n\n!!!',
             html = md.render(dd);
 
-        html.should.equal('<div class="sdl"><div class="icon">{% svg "standard/icon-sdl" %}<img class="icon--pdf" src="{% static "svg/standard/icon-sdl.svg" %}"></div><h5>SDL</h5>hello world!</div>');
+        html.should.equal('<div class="sdl"><div class="icon">{% svg "standard/icon-sdl" %}<img class="icon--pdf" src="{% static "svg/standard/icon-sdl.svg" %}"></div><h5>SDL</h5><p>hello world!</p>\n</div>');
     });
 
     it('must note with markdown content list', function() {
         var dd = '!!! MUST\n### list intro message\n\n1. _list item 1_\n    * sub list item 1\n    * sub list item 2\n2. list item 2\n3. list item 3\n\ntest next block of content\n!!!',
             html = md.render(dd);
 
-        html.should.equal('');
+        html.should.equal('<div class="must"><div class="icon">{% svg "standard/icon-must" %}<img class="icon--pdf" src="{% static "svg/standard/icon-must.svg" %}"></div><h5>Must</h5><h3>list intro message</h3>\n<ol>\n<li><em>list item 1</em>\n<ul>\n<li>sub list item 1</li>\n<li>sub list item 2</li>\n</ul></li>\n<li>list item 2</li>\n<li>list item 3</li>\n</ol>\n<p>test next block of content</p>\n</div>');
     });
 
     it('random note', function() {
         var dd = '!!! JSON\nhello world!\n!!!',
             html = md.render(dd);
 
-        html.should.equal('<div class="json"><div class="icon">{% svg "" %}<img class="icon--pdf" src="{% static "" %}"></div><h5>json</h5>hello world!</div>');
+        html.should.equal('<div class="json"><div class="icon">{% svg "" %}<img class="icon--pdf" src="{% static "" %}"></div><h5>json</h5><p>hello world!</p>\n</div>');
     });
 });
 

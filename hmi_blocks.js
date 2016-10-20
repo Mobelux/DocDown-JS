@@ -3,7 +3,7 @@
 var Mustache = require('mustache');
 
 var parser = function hmi_block_parser(state, startLine, endLine, silent) {
-    var marker, len, tag, nextLine, mem,
+    var marker, len, tag, nextLine, mem, context,
         haveEndMarker = false,
         pos = state.bMarks[startLine] + state.tShift[startLine],
         max = state.eMarks[startLine],
@@ -24,6 +24,9 @@ var parser = function hmi_block_parser(state, startLine, endLine, silent) {
     len = pos - mem;
 
     if (len < 3) { return false; }
+
+    // Since start is found, we can report success here in validation mode
+    if (silent) { return true; }
 
     tag = state.src.slice(pos, max).trim().toLowerCase();
 
@@ -61,10 +64,7 @@ var parser = function hmi_block_parser(state, startLine, endLine, silent) {
     // If a fence has heading spaces, they should be removed from its inner block
     len = state.tShift[startLine];
 
-    state.line = nextLine + (haveEndMarker ? 1 : 0);
-
-    var content = state.getLines(startLine+1, nextLine, state.blkIndent, false).trim();
-    var context = options.tags[tag] || {};
+    context = options.tags[tag] || {};
     context.tag = tag;
 
     if (! context.title) {
@@ -77,13 +77,9 @@ var parser = function hmi_block_parser(state, startLine, endLine, silent) {
         level: state.level
     });
 
-    state.tokens.push({
-        type: 'inline',
-        content: content,
-        level: state.level + 1,
-        lines: [ startLine, state.line ],
-        children: []
-    });
+    state.parser.tokenize(state, startLine + 1, nextLine);
+
+    state.line = nextLine + (haveEndMarker ? 1 : 0);;
 
     state.tokens.push({
         type: 'htmltag',
@@ -95,5 +91,5 @@ var parser = function hmi_block_parser(state, startLine, endLine, silent) {
 };
 
 module.exports = function hmi_blocks(md, options) {
-    md.block.ruler.before('code', 'hmi_blocks', parser, options);
+    md.block.ruler.before('code', 'hmi_blocks', parser, {alt: ['paragraph']});
 }
