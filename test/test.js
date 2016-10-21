@@ -67,7 +67,7 @@ var md = new Remarkable({
     },
     include: {
         root_dir: __dirname,
-        current_dir: __dirname,
+        current_dir: path.join(__dirname, 'deep', 'deeper'),
         asset_dir_name: 'assets'
     }
 });
@@ -177,6 +177,21 @@ describe('Include Code', function() {
 
         html.should.equal('<h1>CSV Table</h1>\n<table><tr><td>Test 1</td><td>Test 2</td><td>Test 3</td></tr><tr><td>a</td><td>b</td><td>c</td></tr><tr><td>1</td><td>2</td><td>3</td></tr></table>');
     });
+
+    it('C++ file', function() {
+        var dd = '# C++\n+++ test.cpp',
+            html = md.render(dd).trim();
+
+        html.should.equal('<h1>C++</h1>\n<pre><code class="language-cpp"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span>\n\n<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;\n\n<span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>\n</span>{\n\t<span class="built_in">cout</span> &lt;&lt; <span class="string">"Test"</span> &lt;&lt; <span class="built_in">endl</span>;\n\t<span class="keyword">return</span> <span class="number">0</span>;\n}\n</code></pre>');
+    });
+
+    it('Obj-C file', function() {
+        var dd = '# M\n+++ test.m',
+            html = md.render(dd).trim();
+
+        html.should.equal('<h1>M</h1>\n<pre><code class="language-m">#import &lt;Foundation/Foundation.h&gt;\n\nint main (int argc, const char * argv[])\n{\n        NSAutoreleasePool *pool <span class="built_in">=</span> [[NSAutoreleasePool alloc] init];\n        NSLog (@<span class="string">"Test"</span>);\n        [pool drain];\n        return <span class="number">0</span>;\n}\n</code></pre>');
+    });
+
 
     it('missing file', function() {
         var dd = '# CSV Table\n+++ nope.cpp',
