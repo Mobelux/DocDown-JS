@@ -135,6 +135,13 @@ describe('Media URL', function() {
 
         html.should.equal('<p><img src="https://smartdevicelink.com/media/assets/mobelux-mark.png" alt="test image"></p>');
     });
+
+    it('local image with ./', function() {
+        var dd = '![test image](./assets/mobelux-mark.png)',
+            html = md.render(dd).trim();
+
+        html.should.equal('<p><img src="https://smartdevicelink.com/media/assets/mobelux-mark.png" alt="test image"></p>');
+    });
 });
 
 describe('Links', function() {

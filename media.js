@@ -13,6 +13,9 @@ var updateMedia = function(state) {
             if (childToken.type !== 'image') { continue; }
             src = childToken.src;
             if (! src.startsWith('http')) {
+                if (src.startsWith('./')) {
+                    src = src.substring(2);
+                }
                 childToken.src = state.options.media_url + src;
             }
         }
