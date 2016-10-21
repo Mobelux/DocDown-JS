@@ -8,7 +8,7 @@
 var Mustache = require('mustache');
 
 var parser = function sequence(state, startLine, endLine, silent) {
-    var marker, len, params, nextLine, mem,
+    var marker, len, params, nextLine, mem, context, imgLine,
         haveEndMarker = false,
         pos = state.bMarks[startLine] + state.tShift[startLine],
         max = state.eMarks[startLine],
@@ -33,6 +33,9 @@ var parser = function sequence(state, startLine, endLine, silent) {
 
     if (len < 3) { return false; }
 
+    // Since start is found, we can report success here in validation mode
+    if (silent) { return true; }
+
     // search end of block
     nextLine = startLine;
 
@@ -48,9 +51,13 @@ var parser = function sequence(state, startLine, endLine, silent) {
         max = state.eMarks[nextLine];
 
         if (state.src.charCodeAt(pos) == 0x21/* ! */) {
-            var img = state.getLines(nextLine, nextLine + 1, 0, false).trim();
-            var re = img.match(/!\[((.|\n)*)\]\(((.|\n)*)\)/m);
+            if (silent) {
+                return true;
+            }
+            var line = state.getLines(nextLine, nextLine + 1, 0, false).trim();
+            var re = line.match(/!\[((.|\n)*)\]\(((.|\n)*)\)/m);
             if (re) {
+                imgLine = line;
                 title = re[1];
                 if (!title) {
                     title = 'Sequence Diagram';
@@ -82,13 +89,7 @@ var parser = function sequence(state, startLine, endLine, silent) {
         break;
     }
 
-    // If a fence has heading spaces, they should be removed from its inner block
-    len = state.tShift[startLine];
-
-    state.line = nextLine + (haveEndMarker ? 1 : 0);
-
-    var content = state.getLines(startLine + 1, nextLine - 1, state.blkIndent, false).trim();
-    var context = {image_url: image_url, title: title};
+    context = {image_url: image_url, title: title};
 
     state.tokens.push({
         type: 'htmltag',
@@ -96,13 +97,13 @@ var parser = function sequence(state, startLine, endLine, silent) {
         level: state.level
     });
 
-    state.tokens.push({
-        type: 'inline',
-        content: content,
-        level: state.level + 1,
-        lines: [ startLine, state.line ],
-        children: []
-    });
+    state.parser.tokenize(state, startLine + 1, nextLine);
+
+    // remove the inline image markdown from the last inline token
+    var lastInlineToken = state.tokens[state.tokens.length - 2];
+    lastInlineToken.content = lastInlineToken.content.replace(imgLine, '').trim();
+
+    state.line = nextLine + (haveEndMarker ? 1 : 0);
 
     state.tokens.push({
         type: 'htmltag',
@@ -114,5 +115,5 @@ var parser = function sequence(state, startLine, endLine, silent) {
 };
 
 module.exports = function hmi_blocks(md, options) {
-    md.block.ruler.before('code', 'sequence', parser, options);
+    md.block.ruler.before('code', 'sequence', parser, {alt: ['paragraph']});
 }
