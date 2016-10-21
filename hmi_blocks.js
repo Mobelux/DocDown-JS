@@ -61,9 +61,6 @@ var parser = function hmi_block_parser(state, startLine, endLine, silent) {
         break;
     }
 
-    // If a fence has heading spaces, they should be removed from its inner block
-    len = state.tShift[startLine];
-
     context = options.tags[tag] || {};
     context.tag = tag;
 
