@@ -79,7 +79,7 @@ var parser = function hmi_block_parser(state, startLine, endLine, silent) {
 
     state.parser.tokenize(state, startLine + 1, nextLine);
 
-    state.line = nextLine + (haveEndMarker ? 1 : 0);;
+    state.line = nextLine + (haveEndMarker ? 1 : 0);
 
     state.tokens.push({
         type: 'htmltag',
