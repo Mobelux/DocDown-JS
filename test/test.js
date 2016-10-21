@@ -1,7 +1,7 @@
 var Remarkable = require('remarkable'),
     path       = require('path'),
     hljs       = require('highlight.js'),
-    hmi_blocks = require('../hmi_blocks'),
+    note_blocks = require('../note_blocks'),
     sequence   = require('../sequence'),
     include    = require('../include'),
     media      = require('../media'),
@@ -39,7 +39,7 @@ var md = new Remarkable({
         prefix: '<div class="visual-link-wrapper"><a href="#" data-src="{{{ image_url }}}" class="visual-link"><div class="visual-link__body"><div class="t-h6 visual-link__title">{{ title }}</div><p class="t-default">',
         postfix: '</p></div><div class="visual-link__link fx-wrapper fx-s-between fx-a-center"><span class="fc-theme">View Diagram</span><span class="icon">{% svg "standard/icon-visual" %}</span></div></a></div>\n<img class="visual-print-image" src="{{{ image_url }}}">',
     },
-    hmi_block: {
+    note_blocks: {
         prefix: '<div class="{{ tag }}"><div class="icon">{% svg "{{{ svg }}}" %}<img class="icon--pdf" src="{% static "{{{ svg_path }}}" %}"></div><h5>{{ title }}</h5>',
         postfix: '</div>',
         tags: {
@@ -72,11 +72,11 @@ var md = new Remarkable({
     }
 });
 
-md.use(hmi_blocks).use(sequence).use(include).use(links).use(media);
+md.use(note_blocks).use(sequence).use(include).use(links).use(media);
 
 
 
-describe('HMI Blocks', function() {
+describe('Note Blocks', function() {
     it('must note', function() {
         var dd = '!!! MUST\nhello world!\n!!!',
             html = md.render(dd);

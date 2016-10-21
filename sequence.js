@@ -114,6 +114,6 @@ var parser = function sequence(state, startLine, endLine, silent) {
     return true;
 };
 
-module.exports = function hmi_blocks(md, options) {
+module.exports = function sequence_diagrams(md, options) {
     md.block.ruler.before('code', 'sequence', parser, {alt: ['paragraph']});
 }

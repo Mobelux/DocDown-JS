@@ -2,12 +2,12 @@
 
 var Mustache = require('mustache');
 
-var parser = function hmi_block_parser(state, startLine, endLine, silent) {
+var parser = function note_block_parser(state, startLine, endLine, silent) {
     var marker, len, tag, nextLine, mem, context,
         haveEndMarker = false,
         pos = state.bMarks[startLine] + state.tShift[startLine],
         max = state.eMarks[startLine],
-        options = state.options.hmi_block;
+        options = state.options.note_blocks;
 
     if (pos + 3 > max) { return false; }
 
@@ -87,6 +87,6 @@ var parser = function hmi_block_parser(state, startLine, endLine, silent) {
     return true;
 };
 
-module.exports = function hmi_blocks(md, options) {
-    md.block.ruler.before('code', 'hmi_blocks', parser, {alt: ['paragraph']});
+module.exports = function note_blocks(md, options) {
+    md.block.ruler.before('code', 'note_blocks', parser, {alt: ['paragraph']});
 }

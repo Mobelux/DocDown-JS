@@ -33,7 +33,7 @@ var findFilePath = function(filename, options) {
     return filePath;
 }
 
-var parser = function sequence(state, startLine, endLine, silent) {
+var parser = function include_parser(state, startLine, endLine, silent) {
     var marker, len, params, nextLine, mem, fileName, filePath,
         pos = state.bMarks[startLine] + state.tShift[startLine],
         max = state.eMarks[startLine],
@@ -99,6 +99,6 @@ var parser = function sequence(state, startLine, endLine, silent) {
     return true;
 };
 
-module.exports = function hmi_blocks(md, options) {
+module.exports = function include(md, options) {
     md.block.ruler.before('code', 'include', parser, options);
 }
