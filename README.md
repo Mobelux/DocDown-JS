@@ -109,7 +109,19 @@ Similar to notes above, the configuration for the sequence diagrams has a `prefi
 
 ## Include
 
-The include DocDown tag allows for including code samples as well as CSV files into the markdown from separate files to allow for easier maintaining and multiple inclusions. CSV files are rendered as HTML tables, otherwise files are displayed as code blocks.
+The include DocDown tag allows for including code samples as well as CSV files into the markdown from separate files to allow for easier maintaining and multiple inclusions. CSV files are rendered as HTML tables, otherwise files are displayed as code blocks. The language is extracted from the file extension. The following extensions are supported by default, however, others can be easily configured via the `extension_map` option. If no mapping is found, the extension is used as the language.
+
+* `json`
+* `html`
+* `css`
+* `js`
+* `m`
+* `h`
+* `txt`
+* `swift`
+* `cpp`
+* `c`
+* `java`
 
 ``` markdown
 +++ test.json
@@ -132,7 +144,8 @@ Configuration includes a root directory which will be the top most directory tha
     include: {
         root_dir: '/path/to/root/docs/',
         current_dir: '/path/to/root/docs/testing/asdf/',
-        asset_dir_name: 'assets'
+        asset_dir_name: 'assets',
+        extension_map: {jason: 'json'}
     }
 }
 ```
@@ -271,7 +284,8 @@ var md = new Remarkable({
     include: {
         root_dir: __dirname,
         current_dir: __dirname,
-        asset_dir_name: 'assets'
+        asset_dir_name: 'assets',
+        extension_map: {jason: 'json'}
     }
 });
 
