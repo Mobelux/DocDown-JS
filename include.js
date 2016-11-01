@@ -17,6 +17,7 @@ var extensionLanguageMap = {
     txt: 'text',
     swift: 'swift',
     cpp: 'cpp',
+    c: 'c',
     java: 'java',
 }
 
