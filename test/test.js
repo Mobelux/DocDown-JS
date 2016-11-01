@@ -68,7 +68,8 @@ var md = new Remarkable({
     include: {
         root_dir: __dirname,
         current_dir: path.join(__dirname, 'deep', 'deeper'),
-        asset_dir_name: 'assets'
+        asset_dir_name: 'assets',
+        extension_map: {jason: 'json'}
     }
 });
 
@@ -178,6 +179,13 @@ describe('Include Code', function() {
         html.should.equal('<h1>JSON</h1>\n<pre><code class="language-json">{\n    <span class="attr">"test"</span>: <span class="string">"json"</span>,\n    <span class="attr">"asdf"</span>: <span class="literal">true</span>\n}\n</code></pre>');
     });
 
+    it('custom extension JSON file', function() {
+        var dd = '# JaSON\n+++ test.jason',
+            html = md.render(dd).trim();
+
+        html.should.equal('<h1>JaSON</h1>\n<pre><code class="language-json">{\n    <span class="attr">"test"</span>: <span class="string">"jason"</span>,\n    <span class="attr">"asdf"</span>: <span class="literal">true</span>\n}\n</code></pre>');
+    });
+
     it('CSV file', function() {
         var dd = '# CSV Table\n+++ test.csv',
             html = md.render(dd).trim();
@@ -196,7 +204,7 @@ describe('Include Code', function() {
         var dd = '# M\n+++ test.m',
             html = md.render(dd).trim();
 
-        html.should.equal('<h1>M</h1>\n<pre><code class="language-m">#import &lt;Foundation/Foundation.h&gt;\n\nint main (int argc, const char * argv[])\n{\n        NSAutoreleasePool *pool <span class="built_in">=</span> [[NSAutoreleasePool alloc] init];\n        NSLog (@<span class="string">"Test"</span>);\n        [pool drain];\n        return <span class="number">0</span>;\n}\n</code></pre>');
+        html.should.equal('<h1>M</h1>\n<pre><code class="language-c"><span class="meta">#import <span class="meta-string">&lt;Foundation/Foundation.h&gt;</span></span>\n\n<span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span>\n</span>{\n        NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];\n        NSLog (@<span class="string">"Test"</span>);\n        [pool drain];\n        <span class="keyword">return</span> <span class="number">0</span>;\n}\n</code></pre>');
     });
 
 
