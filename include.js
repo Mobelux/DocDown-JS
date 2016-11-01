@@ -7,6 +7,19 @@ const Mustache = require('mustache'),
     fs = require('fs'),
     parse = require('csv-parse/lib/sync');
 
+var extensionLanguageMap = {
+    json: 'json',
+    html: 'html',
+    js: 'javascript',
+    css: 'css',
+    m: 'c',
+    h: 'c',
+    txt: 'text',
+    swift: 'swift',
+    cpp: 'cpp',
+    java: 'java',
+}
+
 var fileExists = function(filePath) {
     try {
         fs.accessSync(filePath, fs.constants.R_OK);
@@ -41,6 +54,8 @@ var parser = function include_parser(state, startLine, endLine, silent) {
         title = 'Sequence Diagram',
         image_url = '';
 
+    Object.assign(extensionLanguageMap, options.extension_map);
+
     if (pos + 3 > max) { return false; }
 
     marker = state.src.charCodeAt(pos);
@@ -62,8 +77,9 @@ var parser = function include_parser(state, startLine, endLine, silent) {
     filePath = findFilePath(fileName, options);
 
     if (filePath) {
-        var fileContent = fs.readFileSync(filePath, 'utf-8');
-        var ext = path.extname(filePath).substring(1);
+        var fileContent = fs.readFileSync(filePath, 'utf-8'),
+            ext = path.extname(filePath).substring(1),
+            lang = extensionLanguageMap[ext] || ext;
 
         if (ext === 'csv') {
             var table_html = '<table>';
@@ -86,7 +102,7 @@ var parser = function include_parser(state, startLine, endLine, silent) {
         } else {
             state.tokens.push({
                 type: 'fence',
-                params: ext,
+                params: lang,
                 content: fileContent,
                 lines: [startLine, startLine + 1],
                 level: state.level
