@@ -61,6 +61,9 @@ var parser = function note_block_parser(state, startLine, endLine, silent) {
         break;
     }
 
+    if (typeof options.tags[tag] === "undefined" && options.default_tag) {
+        tag = options.default_tag;
+    }
     context = options.tags[tag] || {};
     context.tag = tag;
 

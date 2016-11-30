@@ -145,6 +145,50 @@ describe('Note Blocks', function() {
 
         html.should.equal('<div class="postfix"><div class="icon">{% svg "standard/icon-sdl" %}<img class="icon--pdf" src="{% static "svg/standard/icon-sdl.svg" %}"></div><h5>Postfixed</h5><p>hello world!</p>\n<span>postfix</span></div>');
     });
+
+    it('default_tag option sets tag if specified tag does not exist', function () {
+        var mdWithDefault = new Remarkable({
+            html:         true,        // Enable HTML tags in source
+            breaks:       true,        // Convert '\n' in paragraphs into <br>
+            langPrefix:   'language-',  // CSS language prefix for fenced blocks
+            // Highlighter function. Should return escaped HTML,
+            // or '' if the source string is not changed
+            highlight: function (str, lang) {
+                hljs.configure({classPrefix: ''});
+                if (lang && hljs.getLanguage(lang)) {
+                    try {
+                        return hljs.highlight(lang, str).value;
+                    } catch (err) {}
+                }
+
+                try {
+                    return hljs.highlightAuto(str).value;
+                } catch (err) {}
+
+                return ''; // use external default escaping
+            },
+            media_url: 'https://smartdevicelink.com/media/',
+            note_blocks: {
+                prefix: '<div class="{{ tag }}"><div class="icon">{% svg "{{{ svg }}}" %}<img class="icon--pdf" src="{% static "{{{ svg_path }}}" %}"></div><h5>{{ title }}</h5>',
+                postfix: '</div>',
+                default_tag: 'note',
+                tags: {
+                    note: {
+                        svg: 'standard/icon-note',
+                        svg_path: 'svg/standard/icon-note.svg',
+                        title: 'Note'
+                    }
+                }
+            }
+        });
+
+        mdWithDefault.use(note_blocks);
+
+        var dd = '!!! DOESNOTEXIST\nhello world!\n!!!',
+            html = mdWithDefault.render(dd);
+
+        html.should.equal('<div class="note"><div class="icon">{% svg "standard/icon-note" %}<img class="icon--pdf" src="{% static "svg/standard/icon-note.svg" %}"></div><h5>Note</h5><p>hello world!</p>\n</div>');
+    });
 });
 
 
