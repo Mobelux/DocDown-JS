@@ -49,7 +49,10 @@ Example configuration:
 
 The prefix and postfix values are used to generate the HTML for around the note content.  These are [mustache template strings](https://mustache.github.io/). These prefix and postfix values are used for all note types.
 
-Note types can be configured via the `tags` key which is a dictionary containing a context dictionary for each note type. The key for the note type should be all lower case. The context values provided in this dictionary are supplied to the mustache template string for rendering.
+Note types can be configured via the `tags` key which is a dictionary containing a context dictionary for each note type. The key for the note type should be all lower case. The context values provided in this dictionary are supplied to the mustache template string for rendering.  Each tag can optionally specify its own prefix and postfix template which overrides the prefix and postfix set at the parent level.
+
+If the optional `default_tag` key is set and a note type which is not found in the `tags` key is specified, then
+it will be treated as if the the default tag was used.
 
 The above DocDown and configuration would produce the following HTML:
 
@@ -258,6 +261,7 @@ var md = new Remarkable({
     note_blocks: {
         prefix: '<div class="{{ tag }}"><div class="icon">{% svg "{{{ svg }}}" %}<img class="icon--pdf" src="{% static "{{{ svg_path }}}" %}"></div><h5>{{ title }}</h5>',
         postfix: '\n</div>',
+        default_tag: 'note',
         tags: {
             must: {
                 svg: 'standard/icon-must',
@@ -277,7 +281,9 @@ var md = new Remarkable({
             sdl: {
                 svg: 'standard/icon-sdl',
                 svg_path: 'svg/standard/icon-sdl.svg',
-                title: 'SDL'
+                title: 'SDL',
+                prefix: '<div>Optional Prefix Override</div><div>',
+                postfix: '<span>Optional Postfix Override</span></div>'
             }
         }
     },
