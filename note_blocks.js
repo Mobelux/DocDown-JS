@@ -3,7 +3,7 @@
 var Mustache = require('mustache');
 
 var parser = function note_block_parser(state, startLine, endLine, silent) {
-    var marker, len, tag, nextLine, mem, context,
+    var marker, len, tag, nextLine, mem, context, prefix, postfix,
         haveEndMarker = false,
         pos = state.bMarks[startLine] + state.tShift[startLine],
         max = state.eMarks[startLine],
@@ -68,9 +68,12 @@ var parser = function note_block_parser(state, startLine, endLine, silent) {
         context.title = tag;
     }
 
+    prefix = (typeof context.prefix !== "undefined") ? context.prefix : options.prefix;
+    postfix = (typeof context.postfix !== "undefined") ? context.postfix : options.postfix;
+
     state.tokens.push({
         type: 'htmltag',
-        content: Mustache.render(options.prefix, context),
+        content: Mustache.render(prefix, context),
         level: state.level
     });
 
@@ -80,7 +83,7 @@ var parser = function note_block_parser(state, startLine, endLine, silent) {
 
     state.tokens.push({
         type: 'htmltag',
-        content: Mustache.render(options.postfix, context),
+        content: Mustache.render(postfix, context),
         level: state.level
     });
 
