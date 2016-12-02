@@ -22,7 +22,8 @@ function sequenceParser(state, startLine, endLine, silent) {
 
   const marker = state.src.charCodeAt(pos);
 
-  if (marker !== 0x7C/* | */) {
+  /* | */
+  if (marker !== 0x7C) {
     return false;
   }
 
@@ -32,10 +33,14 @@ function sequenceParser(state, startLine, endLine, silent) {
 
   const len = pos - mem;
 
-  if (len < 3) { return false; }
+  if (len < 3) {
+    return false;
+  }
 
   // Since start is found, we can report success here in validation mode
-  if (silent) { return true; }
+  if (silent) {
+    return true;
+  }
 
   // search end of block
   nextLine = startLine;
@@ -51,7 +56,8 @@ function sequenceParser(state, startLine, endLine, silent) {
     pos = mem = state.bMarks[nextLine] + state.tShift[nextLine];
     max = state.eMarks[nextLine];
 
-    if (state.src.charCodeAt(pos) === 0x21/* ! */) {
+    /* ! */
+    if (state.src.charCodeAt(pos) === 0x21) {
       if (silent) {
         return true;
       }

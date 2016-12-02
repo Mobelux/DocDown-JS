@@ -55,7 +55,9 @@ function includeParser(state, startLine, _endLine, _silent) {
 
   Object.assign(extensionLanguageMap, options.extension_map);
 
-  if (pos + 3 > max) { return false; }
+  if (pos + 3 > max) {
+    return false;
+  }
 
   const marker = state.src.charCodeAt(pos);
 
@@ -70,7 +72,9 @@ function includeParser(state, startLine, _endLine, _silent) {
 
   const len = pos - mem;
 
-  if (len < 3) { return false; }
+  if (len < 3) {
+    return false;
+  }
 
   const includeLine = state.getLines(startLine, startLine + 1, 0, false).trim();
   const fileName = includeLine.substring(4);

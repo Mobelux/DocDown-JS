@@ -1,9 +1,9 @@
 function linkParser(state) {
-  const tokens = state.tokens;
+  const { tokens } = state;
 
   for (const token of tokens) {
     if (token.type === 'inline') {
-      const children = token.children;
+      const { children } = token;
       const linkMap = state.options.links.link_map;
       let url;
       let hash;

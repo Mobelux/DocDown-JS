@@ -25,10 +25,14 @@ function noteBlockParser(state, startLine, endLine, silent) {
 
   const len = pos - mem;
 
-  if (len < 3) { return false; }
+  if (len < 3) {
+    return false;
+  }
 
   // Since start is found, we can report success here in validation mode
-  if (silent) { return true; }
+  if (silent) {
+    return true;
+  }
 
   let tag = state.src.slice(pos, max).trim().toLowerCase();
   if (!options.tags[tag] && options.default_tag) {

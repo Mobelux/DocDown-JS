@@ -2,12 +2,12 @@
 
 function mediaParser(state) {
   var tokens = state.tokens;
-
   var _iteratorNormalCompletion = true;
   var _didIteratorError = false;
   var _iteratorError = undefined;
 
   try {
+
     for (var _iterator = tokens[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
       var token = _step.value;
 

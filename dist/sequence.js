@@ -24,9 +24,10 @@ function sequenceParser(state, startLine, endLine, silent) {
 
   var marker = state.src.charCodeAt(pos);
 
-  if (marker !== 0x7C /* | */) {
-      return false;
-    }
+  /* | */
+  if (marker !== 0x7C) {
+    return false;
+  }
 
   // scan marker length
   mem = pos;
@@ -57,27 +58,28 @@ function sequenceParser(state, startLine, endLine, silent) {
     pos = mem = state.bMarks[nextLine] + state.tShift[nextLine];
     max = state.eMarks[nextLine];
 
-    if (state.src.charCodeAt(pos) === 0x21 /* ! */) {
-        if (silent) {
-          return true;
+    /* ! */
+    if (state.src.charCodeAt(pos) === 0x21) {
+      if (silent) {
+        return true;
+      }
+      var line = state.getLines(nextLine, nextLine + 1, 0, false).trim();
+      var re = line.match(/!\[((.|\n)*)]\(((.|\n)*)\)/m);
+      if (re) {
+        imgLine = line;
+        title = re[1];
+        if (!title) {
+          title = 'Sequence Diagram';
         }
-        var line = state.getLines(nextLine, nextLine + 1, 0, false).trim();
-        var re = line.match(/!\[((.|\n)*)]\(((.|\n)*)\)/m);
-        if (re) {
-          imgLine = line;
-          title = re[1];
-          if (!title) {
-            title = 'Sequence Diagram';
-          }
-          imageUrl = re[3];
-          if (imageUrl.startsWith('./')) {
-            imageUrl = imageUrl.substring(2);
-          }
-          if (!imageUrl.startsWith('http')) {
-            imageUrl = mediaUrl + imageUrl;
-          }
+        imageUrl = re[3];
+        if (imageUrl.startsWith('./')) {
+          imageUrl = imageUrl.substring(2);
+        }
+        if (!imageUrl.startsWith('http')) {
+          imageUrl = mediaUrl + imageUrl;
         }
       }
+    }
 
     if (state.src.charCodeAt(pos) === marker) {
       pos = state.skipChars(pos, marker);

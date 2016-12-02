@@ -1,9 +1,9 @@
 function mediaParser(state) {
-  const tokens = state.tokens;
+  const { tokens } = state;
 
   for (const token of tokens) {
     if (token.type === 'inline') {
-      const children = token.children;
+      const { children } = token;
       for (const childToken of children) {
         if (childToken.type === 'image') {
           let src = childToken.src;

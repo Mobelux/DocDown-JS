@@ -2,17 +2,18 @@
 
 function linkParser(state) {
   var tokens = state.tokens;
-
   var _iteratorNormalCompletion = true;
   var _didIteratorError = false;
   var _iteratorError = undefined;
 
   try {
+
     for (var _iterator = tokens[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
       var token = _step.value;
 
       if (token.type === 'inline') {
         var children = token.children;
+
         var linkMap = state.options.links.link_map;
         var url = void 0;
         var hash = void 0;
