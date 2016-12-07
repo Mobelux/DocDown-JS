@@ -6,7 +6,12 @@
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha"
   },
-  "author": "",
+  "author": "Jason Emerick <jason@mobelux.com>",
+  "contributors": [
+      "Justin Michalicek <justin@mobelux.com>",
+      "Daniel Farrell <daniel@mobelux.como>",
+      "Wyatt Pultz <wyatt@mobelux.com>"
+  ],
   "license" : "BSD-3-Clause",
   "dependencies": {
     "csv-parse": "^1.1.7",
