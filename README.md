@@ -1,6 +1,6 @@
-# JavaScript DocDown
+# Remarkable DocDown
 
-JavaScript DocDown is a suite of extensions for [Remarkable](https://github.com/jonschlinkert/remarkable).  
+Remarkable DocDown is a suite of extensions for [Remarkable](https://github.com/jonschlinkert/remarkable).  
 
 ## Notes
 
@@ -220,11 +220,11 @@ The media DocDown extension just updates all images that do not start with `http
 var Remarkable = require('remarkable'),
     path       = require('path'),
     hljs       = require('highlight.js'),
-    note_blocks = require('docdown/note_blocks'),
-    sequence   = require('docdown/sequence'),
-    include    = require('docdown/include'),
-    media      = require('docdown/media'),
-    links      = require('docdown/links');
+    note_blocks = require('remarkable-docdown/note_blocks'),
+    sequence   = require('remarkable-docdown/sequence'),
+    include    = require('remarkable-docdown/include'),
+    media      = require('remarkable-docdown/media'),
+    links      = require('remarkable-docdown/links');
 
 
 

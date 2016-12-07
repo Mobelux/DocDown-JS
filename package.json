@@ -1,7 +1,7 @@
 {
-  "name": "docdown",
+  "name": "remarkable-docdown",
   "version": "1.0.0",
-  "description": "",
+  "description": "Remarkable DocDown is a suite of extensions for Remarkable.",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha"
