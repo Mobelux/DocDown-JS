@@ -1,13 +1,18 @@
 {
-  "name": "docdown",
+  "name": "remarkable-docdown",
   "version": "1.0.0",
-  "description": "",
+  "description": "Remarkable DocDown is a suite of extensions for Remarkable.",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Jason Emerick <jason@mobelux.com>",
+  "contributors": [
+      "Justin Michalicek <justin@mobelux.com>",
+      "Daniel Farrell <daniel@mobelux.como>",
+      "Wyatt Pultz <wyatt@mobelux.com>"
+  ],
+  "license" : "BSD-3-Clause",
   "dependencies": {
     "csv-parse": "^1.1.7",
     "mustache": "^2.2.1"
