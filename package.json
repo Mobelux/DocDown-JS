@@ -7,7 +7,7 @@
     "test": "./node_modules/mocha/bin/mocha"
   },
   "author": "",
-  "license": "ISC",
+  "license" : "BSD-3-Clause",
   "dependencies": {
     "csv-parse": "^1.1.7",
     "mustache": "^2.2.1"
