@@ -1,6 +1,8 @@
 # Remarkable DocDown
 
-Remarkable DocDown is a suite of extensions for [Remarkable](https://github.com/jonschlinkert/remarkable).  
+Remarkable DocDown is a suite of extensions for [Remarkable](https://github.com/jonschlinkert/remarkable).
+
+[![Build Status](https://travis-ci.org/livio/DocDown-JS.svg?branch=master)](https://travis-ci.org/livio/DocDown-JS)
 
 ## Notes
 
