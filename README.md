@@ -4,6 +4,46 @@ Remarkable DocDown is a suite of extensions for [Remarkable](https://github.com/
 
 [![Build Status](https://travis-ci.org/livio/DocDown-JS.svg?branch=master)](https://travis-ci.org/livio/DocDown-JS)
 
+## Platform Sections
+
+Platform Sections allows for showing or hiding content sections based on which platform the documentation is being built for.
+
+A platform section is delimited by `@![platform,section]` and `!@`. Section names are case insensitive and multiple
+platform sections can be comma separated in the tag as shown above.
+
+``` markdown
+@![android]
+hello world!
+``` java
+String test = "android";
+```
+!@
+```
+
+The configuration for the platform section is just `platform_section` as shown below. This is the section that will be
+shown for that build and other sections will be hidden.
+
+Example configuration:
+
+``` javascript
+{
+    platform_section: {
+        platform_section: 'Android'
+    }
+}
+```
+
+The above DocDown and configuration would produce the following HTML:
+
+``` HTML
+<p>hello world!</p>
+<pre>
+  <code class="language-java">
+    String test = <span class="string">"android"</span>;
+  </code>
+</pre>
+```
+
 ## Notes
 
 Notes allows for calling out content in note like fashion.  The note type context is configurable through the options passed to the markdown extension.
@@ -226,9 +266,8 @@ var Remarkable = require('remarkable'),
     sequence   = require('remarkable-docdown/sequence'),
     include    = require('remarkable-docdown/include'),
     media      = require('remarkable-docdown/media'),
-    links      = require('remarkable-docdown/links');
-
-
+    links      = require('remarkable-docdown/links'),
+    platform_section = require('remarkable-docdown/platform_section');
 
 var md = new Remarkable({
     html:         true,        // Enable HTML tags in source
@@ -250,6 +289,9 @@ var md = new Remarkable({
 
         return ''; // use external default escaping
     },
+    platform_section: {
+      platform_section: 'Android',
+    }
     media_url: 'https://smartdevicelink.com/media/',
     links: {
         link_map: {
@@ -297,7 +339,7 @@ var md = new Remarkable({
     }
 });
 
-md.use(note_blocks).use(sequence).use(include).use(links).use(media);
+md.use(note_blocks).use(sequence).use(include).use(links).use(media).use(platform_section);
 
 console.log(md.render('# Remarkable rulezz!\n\ntesting\nasdf\n\n!!! MUST\n## block of hmi\nthis is a _quick_ test\n!!!\nasdf'));
 console.log(md.render('# Remarkable rulezz!\n\ntesting\nasdf\n\n|||\n# block of hmi\nthis is a _quick_ test\n![asdf title test](assests/test.jpg)\n|||'));
