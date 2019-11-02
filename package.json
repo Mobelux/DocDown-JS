@@ -18,7 +18,7 @@
   "repository": "",
   "license" : "BSD-3-Clause",
   "dependencies": {
-    "csv-parse": "^1.1.7",
+    "csv-parse": "^4.6.5",
     "mustache": "^2.2.1"
   },
   "devDependencies": {
